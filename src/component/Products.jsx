@@ -19,7 +19,7 @@ const Products = () => {
 
     useEffect(() => {
         // Fetch products from the API
-        fetch('https://wmy2zh-8866.csb.app/products')
+        fetch('https://crawlur-server.onrender.com/products')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -47,7 +47,7 @@ const Products = () => {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8866/search', {
+            const response = await fetch('https://crawlur-server.onrender.com/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
