@@ -6,6 +6,9 @@ import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import YouTubeVideo from './YouTubeShorts';
 import YouTubeShorts from './YouTubeShorts';
+import './ImageGrid.css';
+import { Gallery } from "react-grid-gallery";
+import { Tweet } from 'react-tweet';
 
 
 
@@ -26,12 +29,19 @@ const Product = () => {
     const [youtubShorts, setYoutubeShorts] = useState([]);
     const [youtubVideos, setYoutubeVideos] = useState([]);
     const [youtubShortsLink, setyoutubShortsLink] = useState([]);
+    const [instagramData, setInstagramData] = useState([]);
+    const [tiktokData, setTiktokData] = useState([]);
+    const [twitterData, setTwitterData] = useState([]);
 
     console.log("produts", product);
     console.log("productInformation", productInformation);
     console.log("reviews", reviews);
     console.log("youtubeShorts", youtubShorts);
     console.log("youtubShortsLink", youtubShortsLink)
+    console.log("instagramData", instagramData)
+    console.log("tiktokData", tiktokData)
+    console.log("twitterData", twitterData)
+
 
     console.log(description)
 
@@ -52,16 +62,19 @@ const Product = () => {
 
                 // Assuming the structure of the API response matches your needs
                 setProduct(data.products); // Assuming `data.products` is the product object
-                setProductInformation(data.productInformation); // Assuming `data.productInformation` is an array and you want the first item
-                setReviews(data.reviews); // Assuming `data.reviews` contains reviews related to the product
-                setYoutubeShorts(data.youtubeShorts)
-                setYoutubeVideos(data.youtubeVideos)
-
+                // setProductInformation(data.productInformation); // Assuming `data.productInformation` is an array and you want the first item
+                // setReviews(data.reviews); // Assuming `data.reviews` contains reviews related to the product
+                // setYoutubeShorts(data.youtubeShorts)
+                // setYoutubeVideos(data.youtubeVideos)
+                setInstagramData(data.instagramData)
+                setTiktokData(data.tiktokData)
+                setTwitterData(data.twitterData)
                 // Map through youtubeShorts and create the array of links
-                const youtubeShortsLinks = data.youtubeShorts.map(video => "https://youtube.com/shorts/" + video.video_id);
+                // const youtubeShortsLinks = data.youtubeShorts.map(video => "https://youtube.com/shorts/" + video.video_id);
 
-                // Set the array to setyoutubShortsLink
-                setyoutubShortsLink(youtubeShortsLinks); setLoading(false); // Once data is fetched and set, setLoading to false
+                // // Set the array to setyoutubShortsLink
+                // setyoutubShortsLink(youtubeShortsLinks); 
+                setLoading(false); // Once data is fetched and set, setLoading to false
             } catch (error) {
                 console.error('Error fetching product:', error);
                 setError('Failed to fetch product'); // Set an error message if fetching fails
@@ -124,21 +137,21 @@ const Product = () => {
                         <div className="product-information">
                             <h2>Product Information</h2>
                             {/* <p>{productInformation}</p> */}
-                            {productInformation.map((item, index) => (
-                                <ul key={index}>
-                                    {item.map((pair, i) => {
-                                        // Extracting key and value from each object in the inner array
-                                        const key = Object.keys(pair)[0]; // Assuming each object has only one key
-                                        const value = pair[key];
-
-                                        return (
-                                            <li key={i}>
-                                                <p><strong>{key}:</strong> {value}</p>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            ))}
+                            {/* {productInformation.map((item, index) => ( */}
+                            {/* <ul key={index}> */}
+                            {/* {item.map((pair, i) => { */}
+                            {/* // Extracting key and value from each object in the inner array */}
+                            {/* const key = Object.keys(pair)[0]; // Assuming each object has only one key */}
+                            {/* const value = pair[key]; */}
+                            {/*  */}
+                            {/* return ( */}
+                            {/* <li key={i}> */}
+                            {/* <p><strong>{key}:</strong> {value}</p> */}
+                            {/* </li> */}
+                            {/* ); */}
+                            {/* })} */}
+                            {/* </ul> */}
+                            {/* ))} */}
 
                         </div>
                         <button onClick={() => addProduct(product)} className="btn btn-outline-dark px-4 py-2">
@@ -158,13 +171,13 @@ const Product = () => {
                         <div style={{ marginRight: "30px" }} className=" col-md-6 mr-2 pr-2  positive-reviews">
                             <ul class="list-group">
                                 <h3 class="list-group-item list-group-item-action active">Positive Reviews</h3>
-                                {reviews
-                                    .filter(review => review.sentiment === 'POSITIVE')
-                                    .map((review, index) => (
-                                        <li class="list-group-item" key={index}>
-                                            {review.review}
-                                        </li>
-                                    ))}
+                                {/* {reviews */}
+                                {/* .filter(review => review.sentiment === 'POSITIVE') */}
+                                {/* .map((review, index) => ( */}
+                                {/* <li class="list-group-item" key={index}> */}
+                                {/* {review.review} */}
+                                {/* </li> */}
+                                {/* ))} */}
                             </ul>
                         </div>
                         <div style={{ marginRight: "30px" }} className="col-md-6 mr-2 pr-2  negative-reviews">
@@ -271,16 +284,50 @@ const Product = () => {
 
                     </div>
                 </div>
-                {/* <div className="row d-flex border border-primary"> */}
-                    {/* <h1> Instagram Videos</h1> */}
-                    {/* <div className="col-6 border border-primary"> */}
-{/*  */}
-                    {/* </div> */}
-                    {/* <div className="col-6 border border-primary"> */}
-{/*  */}
-{/*  */}
-                    {/* </div> */}
-                {/* </div> */}
+                <div style={{ marginTop: "50px", }} className="row d-flex ">
+                    <h1>Instagram Feeds</h1>
+                    <div className="row">
+                        {instagramData.map((item, index) => (
+                            <div className="column" key={index}>
+
+                                <img
+                                    src={`data:image/jpeg;base64,${item.base64Image}`}
+                                    alt={item.alt}
+                                    style={{ maxWidth: '100%', height: 'auto' }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div style={{ marginTop: "50px" }} className="row d-flex ">
+                    <h1>Tweets</h1>
+                    <div className="row">
+                        {twitterData.map((item, index) => (
+                            <div className="column" key={index}>
+                                <div data-theme="dark">
+                                    <Tweet id={item.id} />
+                                </div>
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
+                <div style={{ marginTop: "50px" }} className="row d-flex border border-primary">
+                    <h1>  Tiktok </h1>
+                    <div className="row">
+
+                        {/* {tiktokData.map((item, index) => (
+                            <div className="column" key={index}>
+                                <img src={item.displayUrl} alt={item.displayUrl} />
+                            
+                            </div>
+
+                        ))} */}
+
+                    </div>
+
+                </div>
+
 
 
             </>
