@@ -54,7 +54,7 @@ const Product = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await fetch(`https://crawlur-server.onrender.com/productt/B00NGV4506`);
+                const response = await fetch(`http://localhost:8866/productt/B00NGV4506`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
